@@ -29,7 +29,7 @@ OR
 
    * Open HACS (Home Assistant Community Store) in Home Assistant
    * Click the three dots menu (top right) and select Custom repositories
-   * Put /ha-Flipkart-order-status for Repository, and Integration for Category, then click "Add".
+   * Put garrytarry/ha-Flipkart-order-status for Repository, and Integration for Category, then click "Add".
    * Click "Explore and Download Repositories" in the lower right.  Search for "Flipkart Order Status" and install
    * Restart Home Assistant
 
