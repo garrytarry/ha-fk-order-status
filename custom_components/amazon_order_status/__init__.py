@@ -1,4 +1,4 @@
-"""Amazon Order Status integration."""
+"""Flipkart Order Status integration."""
 
 import logging
 from datetime import timedelta
@@ -8,7 +8,7 @@ from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.helpers import config_validation as cv
 
 from .const import DOMAIN, SERVICE_PURGE_ORDER, ATTR_ORDER_ID
-from .coordinator import AmazonOrdersCoordinator
+from .coordinator import FlipkartOrdersCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -26,13 +26,13 @@ async def _handle_purge_order(hass: HomeAssistant, call: ServiceCall) -> None:
     if not order_id:
         _LOGGER.warning(
             "purge_order called with empty order_id. "
-            "If using a dashboard button, call script.purge_amazon_order instead so the order ID is read when you tap."
+            "If using a dashboard button, call script.purge_flipkart_order instead so the order ID is read when you tap."
         )
         return
     domain_data = hass.data.get(DOMAIN) or {}
     removed = False
     for key, value in domain_data.items():
-        if isinstance(value, AmazonOrdersCoordinator):
+        if isinstance(value, FlipkartOrdersCoordinator):
             if await value.async_purge_order(order_id):
                 removed = True
     if not removed:
@@ -49,9 +49,9 @@ def _make_purge_order_handler(hass: HomeAssistant):
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Amazon Order Status from a config entry."""
+    """Set up Flipkart Order Status from a config entry."""
     # Create the coordinator
-    coordinator = AmazonOrdersCoordinator(hass, entry)
+    coordinator = FlipkartOrdersCoordinator(hass, entry)
     await coordinator.async_config_entry_first_refresh()
 
     # Ensure DOMAIN dict exists
