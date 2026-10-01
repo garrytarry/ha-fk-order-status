@@ -23,13 +23,13 @@ We obtain this information via email as Flipkart does not publish any public API
 Click here: 
 
 <!-- [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)]
-(https://my.home-assistant.io/redirect/hacs_repository/?owner=koconnorgit&repository=ha-Flipkart-order-status&category=integration)!--> 
+(https://my.home-assistant.io/redirect/hacs_repository/?owner=garrytarry&repository=ha-Flipkart-order-status&category=integration)!--> 
 
 OR
 
    * Open HACS (Home Assistant Community Store) in Home Assistant
    * Click the three dots menu (top right) and select Custom repositories
-   * Put koconnorgit/ha-Flipkart-order-status for Repository, and Integration for Category, then click "Add".
+   * Put /ha-Flipkart-order-status for Repository, and Integration for Category, then click "Add".
    * Click "Explore and Download Repositories" in the lower right.  Search for "Flipkart Order Status" and install
    * Restart Home Assistant
 
