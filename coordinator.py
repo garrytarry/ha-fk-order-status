@@ -1,4 +1,4 @@
-"""Amazon Orders Data Coordinator."""
+"""flipkart Orders Data Coordinator."""
 
 from __future__ import annotations
 
@@ -51,7 +51,7 @@ def _to_utc(dt: datetime) -> datetime:
     return dt.astimezone(timezone.utc)
 LAST_CHECK_KEY = "last_check"
 STORAGE_VERSION = 1
-STORAGE_KEY = "amazon_order_status"
+STORAGE_KEY = "flipkart_order_status"
 ORDERS_KEY = "orders"
 
 ORDER_REGEX = re.compile(r"Order\s*#\s*([0-9\-]{10,})", re.IGNORECASE)
@@ -102,8 +102,8 @@ def _select_folder(mail: imaplib.IMAP4, folder: str) -> None:
         mail.select(folder)
 
 
-class AmazonOrdersCoordinator(DataUpdateCoordinator):
-    """Coordinator to fetch and track Amazon orders via email."""
+class flipkartOrdersCoordinator(DataUpdateCoordinator):
+    """Coordinator to fetch and track flipkart orders via email."""
 
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry):
         self.hass = hass
@@ -125,7 +125,7 @@ class AmazonOrdersCoordinator(DataUpdateCoordinator):
         super().__init__(
             hass,
             _LOGGER,
-            name="Amazon Order Status",
+            name="flipkart Order Status",
             update_interval=timedelta(minutes=interval_minutes),
         )
 
@@ -141,10 +141,10 @@ class AmazonOrdersCoordinator(DataUpdateCoordinator):
         stored = await self._store.async_load()
         if stored:
             self._orders = stored.get(ORDERS_KEY, {})
-            _LOGGER.debug("Loaded %d stored Amazon orders", len(self._orders))
+            _LOGGER.debug("Loaded %d stored flipkart orders", len(self._orders))
         else:
             self._orders = {}
-            _LOGGER.debug("No stored Amazon orders found")
+            _LOGGER.debug("No stored flipkart orders found")
 
     async def async_save_state(self, last_check: datetime) -> None:
         await self._store.async_save(
@@ -261,7 +261,7 @@ class AmazonOrdersCoordinator(DataUpdateCoordinator):
         return True
 
     def _fetch_and_parse_emails(self, last_check: datetime | None, now: datetime):
-        """Connect to IMAP and parse Amazon emails."""
+        """Connect to IMAP and parse flipkart emails."""
         email_addr = self.entry.data["email"]
         password = self.entry.data["password"]
         imap_server = self.entry.data["imap_server"]
@@ -467,7 +467,7 @@ class AmazonOrdersCoordinator(DataUpdateCoordinator):
         return ""
 
     def _extract_tracking_url(self, html_body: str) -> str | None:
-        """Extract Amazon tracking URL or order link from email HTML."""
+        """Extract flipkart tracking URL or order link from email HTML."""
         soup = BeautifulSoup(html_body, "html.parser")
 
         for link in soup.find_all("a", href=True):
@@ -475,9 +475,9 @@ class AmazonOrdersCoordinator(DataUpdateCoordinator):
             href = html.unescape(link["href"])
 
             # Case 1: Tracking links
-            if "track package" in text or "progress-tracker" in href:
+            if "Track your Shipment" in text or "progress-tracker" in href:
                 match = re.search(
-                    r"https://www\.amazon\.com/progress-tracker/[^&\"]+",
+                    r"https://www\.fpktrans\.sendclean\.net/c/[^&\"]+",
                     href,
                 )
                 if match:
