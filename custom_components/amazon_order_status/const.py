@@ -1,4 +1,4 @@
-DOMAIN = "amazon_order_status"
+DOMAIN = "flipkart_order_status"
 
 CONF_EMAIL = "email"
 CONF_IMAP_SERVER = "imap_server"
