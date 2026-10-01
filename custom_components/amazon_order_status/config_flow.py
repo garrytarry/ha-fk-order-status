@@ -1,4 +1,4 @@
-"""Config flow for Amazon Order Status integration."""
+"""Config flow for Flipkart Order Status integration."""
 
 from homeassistant import config_entries
 import voluptuous as vol
@@ -6,7 +6,7 @@ import imaplib
 import socket
 
 from .const import DOMAIN, CONF_IMAP_FOLDER
-from .options_flow import AmazonOrderStatusOptionsFlow
+from .options_flow import FlipkartOrderStatusOptionsFlow
 
 
 def _select_folder_quoted(imap, folder: str) -> None:
@@ -33,8 +33,8 @@ async def validate_imap_config(hass, host, port, username, password, folder=None
     return await hass.async_add_executor_job(_validate)
 
 
-class AmazonOrdersConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Amazon Orders."""
+class FlipkartOrdersConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+    """Handle a config flow for Flipkart Orders."""
 
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
@@ -57,7 +57,7 @@ class AmazonOrdersConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             if error is None:
                 # Create config entry with initial options including mark_as_read
                 return self.async_create_entry(
-                    title="Amazon Orders",
+                    title="Flipkart Orders",
                     data={
                         "email": user_input["email"],
                         "imap_server": user_input["imap_server"],
@@ -98,4 +98,4 @@ class AmazonOrdersConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     @staticmethod
     def async_get_options_flow(config_entry):
         """Return the options flow handler for this config entry."""
-        return AmazonOrderStatusOptionsFlow(config_entry)
+        return FlipkartOrderStatusOptionsFlow(config_entry)
