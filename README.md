@@ -36,12 +36,6 @@ OR
 
 
 
-*Manual*
-
-Download the Integration: https://github.com/koconnorgit/ha-Flipkart-order-status/releases/latest
-
-Place the Flipkart_order_status folder in your Home Assistant custom_components directory:
-* Home Assistant Directory/custom_components/Flipkart_order_status/
 
 *Make sure it contains:*
 ```
